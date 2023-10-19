@@ -14,7 +14,7 @@
                <content>
                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="437.0" prefWidth="610.0">
                     <children>
-                       <TableView layoutX="102.0" layoutY="-2.0" prefHeight="375.0" prefWidth="505.0">
+                       <TableView layoutX="102.0" layoutY="-2.0" prefHeight="375.0" prefWidth="505.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="102.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="-2.0">
                        <columns>
                            <TableColumn prefWidth="67.20001220703125" text="2020" />
                            <TableColumn prefWidth="74.39996337890625" text="2021" />
@@ -42,7 +42,7 @@
                                  <Font name="System Italic" size="12.0" />
                               </font>
                            </Label>
-                           <Button fx:id="wczytajCSVBtn" layoutX="19.0" layoutY="330.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Wczytaj CSV">
+                           <Button fx:id="wczytajCSVBtn" layoutX="19.0" layoutY="330.0" mnemonicParsing="false" onAction="#onWczytajCSVBtnClick" prefHeight="26.0" prefWidth="74.0" text="Wczytaj CSV">
                               <font>
                                  <Font size="10.0" />
                               </font></Button>
@@ -58,8 +58,8 @@
                            <Label layoutX="114.0" layoutY="130.0" prefHeight="30.0" prefWidth="52.0" text="Mediana:" />
                            <Label layoutX="388.0" layoutY="131.0" prefHeight="28.0" prefWidth="62.0" text="Dominanta:" />
                            <Label layoutX="24.0" layoutY="236.0" prefHeight="18.0" prefWidth="138.0" text="Odchylenie standardowe: " />
-                           <ComboBox fx:id="yearsComboBox" layoutX="126.0" layoutY="330.0" prefWidth="150.0" />
-                           <Button fx:id="obliczBtn" layoutX="372.0" layoutY="328.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="94.0" text="Oblicz" />
+                           <ComboBox fx:id="yearsComboBox" layoutX="126.0" layoutY="330.0" prefWidth="150.0" AnchorPane.bottomAnchor="15.599999999999987" AnchorPane.leftAnchor="126.0" AnchorPane.rightAnchor="333.20000000000005" />
+                           <Button fx:id="obliczBtn" layoutX="372.0" layoutY="328.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="94.0" text="Oblicz" AnchorPane.bottomAnchor="12.79999999999999" AnchorPane.leftAnchor="372.0" AnchorPane.rightAnchor="143.20000000000002" AnchorPane.topAnchor="328.0" />
                            <Label layoutX="385.0" layoutY="33.0" prefHeight="18.0" prefWidth="68.0" text="Maksimum :" />
                            <Label layoutX="102.0" layoutY="33.0" prefHeight="18.0" prefWidth="60.0" text="Minimum :" />
                            <Label layoutX="144.0" layoutY="185.0" prefHeight="18.0" prefWidth="21.0" text="Q1:" />
@@ -68,10 +68,10 @@
                            <Label layoutX="405.0" layoutY="236.0" prefHeight="18.0" prefWidth="45.0" text="Kurtoza:" />
                            <Label layoutX="116.0" layoutY="284.0" prefHeight="18.0" prefWidth="47.0" text="Rozstęp:" />
                            <Label layoutX="400.0" layoutY="284.0" prefHeight="18.0" prefWidth="54.0" text="Skośność:" />
-                           <TextField fx:id="minTxtField" layoutX="171.0" layoutY="29.0" prefHeight="26.0" prefWidth="61.0" />
-                           <TextField fx:id="avgTxtField" layoutX="171.0" layoutY="82.0" prefHeight="26.0" prefWidth="61.0" />
-                           <TextField fx:id="medianaTxtField" layoutX="171.0" layoutY="132.0" prefHeight="26.0" prefWidth="61.0" />
-                           <TextField fx:id="q1TxtField" layoutX="171.0" layoutY="181.0" prefHeight="26.0" prefWidth="61.0" />
+                           <TextField fx:id="minTxtField" layoutX="171.0" layoutY="29.0" prefHeight="26.0" prefWidth="61.0" AnchorPane.topAnchor="30.0" />
+                           <TextField fx:id="avgTxtField" layoutX="171.0" layoutY="82.0" prefHeight="26.0" prefWidth="61.0" AnchorPane.topAnchor="82.0" />
+                           <TextField fx:id="medianaTxtField" layoutX="171.0" layoutY="132.0" prefHeight="26.0" prefWidth="61.0" AnchorPane.topAnchor="132.0" />
+                           <TextField fx:id="q1TxtField" layoutX="171.0" layoutY="181.0" prefHeight="26.0" prefWidth="61.0" AnchorPane.topAnchor="182.0" />
                            <TextField fx:id="q2TxtField" layoutX="323.0" layoutY="181.0" prefHeight="26.0" prefWidth="61.0" />
                            <TextField fx:id="q3TxtField" layoutX="459.0" layoutY="181.0" prefHeight="26.0" prefWidth="61.0" />
                            <TextField fx:id="maksTxtField" layoutX="459.0" layoutY="29.0" prefHeight="26.0" prefWidth="61.0" />
@@ -79,8 +79,8 @@
                            <TextField fx:id="dominTxtField" layoutX="459.0" layoutY="132.0" prefHeight="26.0" prefWidth="61.0" />
                            <TextField fx:id="kurtozaTxtField" layoutX="459.0" layoutY="232.0" prefHeight="26.0" prefWidth="61.0" />
                            <TextField fx:id="skosnoscTxtField" layoutX="459.0" layoutY="280.0" prefHeight="26.0" prefWidth="61.0" />
-                           <TextField fx:id="odchylenieStandTxtField" layoutX="171.0" layoutY="232.0" prefHeight="26.0" prefWidth="61.0" />
-                           <TextField fx:id="rozstepTxtField" layoutX="170.0" layoutY="280.0" prefHeight="26.0" prefWidth="61.0" />
+                           <TextField fx:id="odchylenieStandTxtField" layoutX="171.0" layoutY="232.0" prefHeight="26.0" prefWidth="61.0" AnchorPane.topAnchor="230.0" />
+                           <TextField fx:id="rozstepTxtField" layoutX="170.0" layoutY="280.0" prefHeight="26.0" prefWidth="61.0" AnchorPane.topAnchor="280.0" />
                         </children></AnchorPane>
                </content>
              </Tab>
