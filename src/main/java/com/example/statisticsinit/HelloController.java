@@ -4,9 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.Scanner;
 
 public class HelloController {
@@ -20,8 +18,8 @@ public class HelloController {
     }
     @FXML
     protected void onWczytajCSVBtnClick(){
-        //String path = "src\\example111.csv";
-        String path = "D:\\PROGRAMMING_PROJECTS\\StatisticsInIT\\StatisticsInIT\\src\\main\\resources\\com\\example\\statisticsinit\\aaa.txt";
+
+        /*String path = "D:\\PROGRAMMING_PROJECTS\\StatisticsInIT\\StatisticsInIT\\src\\main\\resources\\com\\example\\statisticsinit\\aaa.txt";
 
         String line = "";
 
@@ -35,6 +33,34 @@ public class HelloController {
         }
 
         System.out.println(line);
+        */
+
+        String path = "D:\\PROGRAMMING_PROJECTS\\StatisticsInIT\\StatisticsInIT\\src\\main\\resources\\com\\example\\statisticsinit\\example111.csv";
+        BufferedReader reader = null;
+        String line = "";
+
+        try{
+                reader = new BufferedReader(new FileReader(path));
+
+                while ((line = reader.readLine()) != null){
+                    String[] row = line.split(",");
+
+                    for (String rowLine : row) {
+                        System.out.printf("%-10s",rowLine);
+                    }
+
+                    System.out.println();
+                }
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
 
     }
 
