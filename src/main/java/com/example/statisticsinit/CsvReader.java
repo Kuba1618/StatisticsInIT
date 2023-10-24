@@ -41,12 +41,12 @@ public class CsvReader {
         // Wyświetlenie odczytanych danych
         for (List<String> column : data) {
 
-            /*for (String value : column) {
-                //System.out.print(value + "\t");
+            for (String value : column) {
+                System.out.print(value + "\t");
             }
-            System.out.println();*/
+            System.out.println();
 
-            System.out.println(Arrays.toString(column.toArray()));
+            //System.out.println(Arrays.toString(column.toArray()));
         }
     }
 

@@ -37,6 +37,39 @@ public class HelloController implements  Initializable{
     protected void onWczytajCSVBtnClick() {
         CsvReader csv = new CsvReader();
         csv.main();
-        yearsComboBox.getItems().addAll(CsvReader.showOnlyYears(csv.data));
+        yearsComboBox.getItems().addAll(CsvReader.getYears(csv.data));
     }
+    public static double firstQuartile(List<Integer> list) {
+        int size = list.size();
+        int index = size / 4;
+        if (size % 4 == 0) {
+            return (list.get(index - 1) + list.get(index)) / 2.0;
+        } else {
+            return list.get(index);
+        }
+    }
+
+    public static double secondQuartile(List<Integer> list) {
+        Collections.sort(list);
+        int size = list.size();
+        if (size % 2 == 0) {
+            int mid1 = list.get(size / 2 - 1);
+            int mid2 = list.get(size / 2);
+            return (mid1 + mid2) / 2.0;
+        } else {
+            return list.get(size / 2);
+        }
+    }
+
+    public static double thirdQuartile(List<Integer> list) {
+        int size = list.size();
+        int index = 3 * size / 4;
+        if (size % 4 == 0) {
+            return (list.get(index - 1) + list.get(index)) / 2.0;
+        } else {
+            return list.get(index);
+        }
+    }
+
+
 }
