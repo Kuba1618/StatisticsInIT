@@ -37,7 +37,30 @@ public class CsvReader {
         return dataList;
     }
 
+    public ArrayList<Integer> getDataByYear(int year){
+        ArrayList<Integer> accidentsInConcreteYear = new ArrayList<>();
+
+        for (List<String> column : data) {
+
+            if(column.get(0).equals(year + "")){
+
+                for (String value : column) {
+
+                    try{
+                        accidentsInConcreteYear.add(Integer.parseInt(value));
+                    }
+                    catch (Exception exception){
+                        System.out.println("Błąd konwersji z String na int");
+                    }
+                }
+            }
+        }
+
+        return accidentsInConcreteYear;
+    }
+
     public static void showAllData(List<List<String>> data){
+
         // Wyświetlenie odczytanych danych
         for (List<String> column : data) {
 
@@ -71,7 +94,6 @@ public class CsvReader {
         data = readCsvFile(filePath);
         showAllData(data);
         getYears(data);
-
     }
 
 }

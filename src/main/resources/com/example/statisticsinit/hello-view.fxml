@@ -59,7 +59,7 @@
                            <Label layoutX="388.0" layoutY="131.0" prefHeight="28.0" prefWidth="62.0" text="Dominanta:" />
                            <Label layoutX="24.0" layoutY="236.0" prefHeight="18.0" prefWidth="138.0" text="Odchylenie standardowe: " />
                            <ComboBox fx:id="yearsComboBox" layoutX="126.0" layoutY="330.0" prefWidth="150.0" AnchorPane.bottomAnchor="15.599999999999987" AnchorPane.leftAnchor="126.0" AnchorPane.rightAnchor="333.20000000000005" />
-                           <Button fx:id="obliczBtn" layoutX="372.0" layoutY="328.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="94.0" text="Oblicz" AnchorPane.bottomAnchor="12.79999999999999" AnchorPane.leftAnchor="372.0" AnchorPane.rightAnchor="143.20000000000002" AnchorPane.topAnchor="328.0" />
+                           <Button fx:id="obliczBtn" onAction="#onCountBtn" layoutX="372.0" layoutY="328.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="94.0" text="Oblicz" AnchorPane.bottomAnchor="12.79999999999999" AnchorPane.leftAnchor="372.0" AnchorPane.rightAnchor="143.20000000000002" AnchorPane.topAnchor="328.0" />
                            <Label layoutX="385.0" layoutY="33.0" prefHeight="18.0" prefWidth="68.0" text="Maksimum :" />
                            <Label layoutX="102.0" layoutY="33.0" prefHeight="18.0" prefWidth="60.0" text="Minimum :" />
                            <Label layoutX="144.0" layoutY="185.0" prefHeight="18.0" prefWidth="21.0" text="Q1:" />
