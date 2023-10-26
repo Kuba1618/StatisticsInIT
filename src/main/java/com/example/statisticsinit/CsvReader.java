@@ -55,6 +55,7 @@ public class CsvReader {
                 }
             }
         }
+        accidentsInConcreteYear.remove(0);
 
         return accidentsInConcreteYear;
     }

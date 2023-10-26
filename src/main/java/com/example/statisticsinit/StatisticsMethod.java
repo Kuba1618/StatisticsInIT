@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class StatisticsMethod {
+import static java.lang.Math.sqrt;
 
-    public List<Integer> carAccidents;
+public class StatisticsMethod {
+    public static List<Integer> carAccidents;
     public StatisticsMethod(ArrayList<Integer> carAccidents){
            this.carAccidents = carAccidents;
     }
@@ -19,33 +20,16 @@ public class StatisticsMethod {
             sum += numberAccidentsOnConcreteWay;
         }
 
-        return (float) sum /carAccidents.size();
+        return  (float) sum /carAccidents.size();
     }
 
-    public int minCarAccidentsInYear(){
-
-        int min = 0;
-
-        for(int numberAccidentsOnConcreteWay : carAccidents){
-            if(min > numberAccidentsOnConcreteWay){
-                min = numberAccidentsOnConcreteWay;
-            }
-        }
-
-        return min;
+    public int min(){
+        return Collections.min(carAccidents);
     }
 
-    public int maksCarAccidentsInYear() {
+    public int maks() {
 
-        int max = 0;
-
-        for (int numberAccidentsOnConcreteWay : carAccidents) {
-            if (max < numberAccidentsOnConcreteWay) {
-                max = numberAccidentsOnConcreteWay;
-            }
-        }
-
-        return max;
+        return Collections.max(carAccidents);
     }
 
 
@@ -113,38 +97,53 @@ public class StatisticsMethod {
         return mode;
     }
 
-    public static double firstQuartile(List<Integer> list) {
-        int size = list.size();
+    public static double firstQuartile() {
+        int size = carAccidents.size();
         int index = size / 4;
         if (size % 4 == 0) {
-            return (list.get(index - 1) + list.get(index)) / 2.0;
+            return (carAccidents.get(index - 1) + carAccidents.get(index)) / 2.0;
         } else {
-            return list.get(index);
+            return carAccidents.get(index);
         }
     }
 
-    public static double secondQuartile(List<Integer> list) {
-        Collections.sort(list);
-        int size = list.size();
+    public static double secondQuartile() {
+        Collections.sort(carAccidents);
+        int size = carAccidents.size();
         if (size % 2 == 0) {
-            int mid1 = list.get(size / 2 - 1);
-            int mid2 = list.get(size / 2);
+            int mid1 = carAccidents.get(size / 2 - 1);
+            int mid2 = carAccidents.get(size / 2);
             return (mid1 + mid2) / 2.0;
         } else {
-            return list.get(size / 2);
+            return carAccidents.get(size / 2);
         }
     }
 
-    public static double thirdQuartile(List<Integer> list) {
-        int size = list.size();
+    public static double thirdQuartile() {
+        int size = carAccidents.size();
         int index = 3 * size / 4;
         if (size % 4 == 0) {
-            return (list.get(index - 1) + list.get(index)) / 2.0;
+            return (carAccidents.get(index - 1) + carAccidents.get(index)) / 2.0;
         } else {
-            return list.get(index);
+            return carAccidents.get(index);
         }
     }
 
     //@ToDo uzupełnić kolejne metody statystyczne
+    public double standardDivision(){
+
+        double standardDivision = 0.0f;
+        float average = average();
+        int n = carAccidents.size(); //amount of data(numbers of car accidents)
+        float expression = 0.0f;
+
+        for(int x : carAccidents){
+            expression += ((x - average) * (x - average));
+        }
+
+        standardDivision = sqrt((expression)/n);
+
+        return standardDivision;
+    }
 
 }

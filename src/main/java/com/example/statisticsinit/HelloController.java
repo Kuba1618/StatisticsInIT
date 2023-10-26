@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
@@ -15,26 +16,17 @@ import java.util.*;
 import java.util.List;
 
 public class HelloController implements  Initializable{
-
     public CsvReader csv = new CsvReader();
-    public ArrayList<LinkedList<Integer>> numberOfCarAccidents;
+    public ArrayList<Integer> carAccidentsInChosenYear = new ArrayList<>();
     public static String[] yearsList;
     @FXML
-    private Label welcomeText;
-    @FXML
-    private Button wczytajCSVBtn;
-    @FXML
     private ComboBox yearsComboBox;
+    @FXML
+    private TextField odchylenieStandTxtField,minTxtField,maksTxtField,avgTxtField,medianaTxtField,dominTxtField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
     }
-
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
-    }
-
     @FXML
     protected void onWczytajCSVBtnClick() {
         csv.main();
@@ -53,9 +45,28 @@ public class HelloController implements  Initializable{
             System.out.println("Błąd konwersji typów (String na int)");
         }
 
-        for(int i :csv.getDataByYear(yearFromComboBox)){
+        //UZUPEŁNIENIE DANYCH
+        carAccidentsInChosenYear = csv.getDataByYear(yearFromComboBox);
+
+        displayCarAccidentsByYear();
+
+        StatisticsMethod statisticsMethods = new StatisticsMethod(carAccidentsInChosenYear);
+        odchylenieStandTxtField.setText(String.valueOf(statisticsMethods.standardDivision()));
+        minTxtField.setText(String.valueOf(statisticsMethods.min()));
+        maksTxtField.setText(String.valueOf(statisticsMethods.maks()));
+        avgTxtField.setText(String.valueOf(statisticsMethods.average()));
+        medianaTxtField.setText(String.valueOf(statisticsMethods.median()));
+        dominTxtField.setText(String.valueOf(statisticsMethods.mode()));
+
+    }
+
+    public void displayCarAccidentsByYear(){
+
+        for(int i : carAccidentsInChosenYear){
             System.out.print(i + "\t");
         }
+
+        System.out.println("");
     }
 
 }
