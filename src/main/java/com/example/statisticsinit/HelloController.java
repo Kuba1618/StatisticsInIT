@@ -23,6 +23,8 @@ public class HelloController implements  Initializable{
     private ComboBox yearsComboBox;
     @FXML
     private TextField odchylenieStandTxtField,minTxtField,maksTxtField,avgTxtField,medianaTxtField,dominTxtField;
+    @FXML
+    private TextField q1TxtField,q2TxtField,q3TxtField,rozstepTxtField,skosnoscTxtField,varianceTxtField,kurtozaTxtField;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,11 +47,12 @@ public class HelloController implements  Initializable{
             System.out.println("Błąd konwersji typów (String na int)");
         }
 
-        //UZUPEŁNIENIE DANYCH
+        //Load concrete year data (without year number) to an ArrayList
         carAccidentsInChosenYear = csv.getDataByYear(yearFromComboBox);
 
         displayCarAccidentsByYear();
 
+        //Load data to appriopriate fields
         StatisticsMethod statisticsMethods = new StatisticsMethod(carAccidentsInChosenYear);
         odchylenieStandTxtField.setText(String.valueOf(statisticsMethods.standardDivision()));
         minTxtField.setText(String.valueOf(statisticsMethods.min()));
@@ -57,7 +60,13 @@ public class HelloController implements  Initializable{
         avgTxtField.setText(String.valueOf(statisticsMethods.average()));
         medianaTxtField.setText(String.valueOf(statisticsMethods.median()));
         dominTxtField.setText(String.valueOf(statisticsMethods.mode()));
-
+        q1TxtField.setText(String.valueOf(statisticsMethods.firstQuartile()));
+        q2TxtField.setText(String.valueOf(statisticsMethods.secondQuartile()));
+        q3TxtField.setText(String.valueOf(statisticsMethods.thirdQuartile()));
+        rozstepTxtField.setText(String.valueOf(statisticsMethods.distance()));
+        skosnoscTxtField.setText(String.valueOf(statisticsMethods.skewness()));
+        varianceTxtField.setText(String.valueOf(statisticsMethods.variance()));
+        kurtozaTxtField.setText(String.valueOf(statisticsMethods.kurtosis()));
     }
 
     public void displayCarAccidentsByYear(){

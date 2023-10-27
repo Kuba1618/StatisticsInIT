@@ -97,7 +97,7 @@ public class StatisticsMethod {
         return mode;
     }
 
-    public static double firstQuartile() {
+    public double firstQuartile() {
         int size = carAccidents.size();
         int index = size / 4;
         if (size % 4 == 0) {
@@ -107,7 +107,7 @@ public class StatisticsMethod {
         }
     }
 
-    public static double secondQuartile() {
+    public double secondQuartile() {
         Collections.sort(carAccidents);
         int size = carAccidents.size();
         if (size % 2 == 0) {
@@ -119,7 +119,7 @@ public class StatisticsMethod {
         }
     }
 
-    public static double thirdQuartile() {
+    public double thirdQuartile() {
         int size = carAccidents.size();
         int index = 3 * size / 4;
         if (size % 4 == 0) {
@@ -129,9 +129,7 @@ public class StatisticsMethod {
         }
     }
 
-    //@ToDo uzupełnić kolejne metody statystyczne
-    public double standardDivision(){
-
+    public double variance() {
         double standardDivision = 0.0f;
         float average = average();
         int n = carAccidents.size(); //amount of data(numbers of car accidents)
@@ -141,9 +139,38 @@ public class StatisticsMethod {
             expression += ((x - average) * (x - average));
         }
 
-        standardDivision = sqrt((expression)/n);
+        standardDivision = (expression)/n;
 
         return standardDivision;
     }
+    public double standardDivision(){
+        return sqrt(variance());
+    }
 
+    public int distance(){ //ROZSTĘP
+        return this.maks() - this.min();
+    }
+
+    public float skewness(){
+        return this.average() - mode();
+    }
+
+    public double fourCentralMoment(){
+        double fourCentralMoment = 0.0f;
+        float average = average();
+        int n = carAccidents.size(); //amount of data(numbers of car accidents)
+        float expression = 0.0f;
+
+        for(int x : carAccidents){
+            expression += ((x - average) * (x - average) * (x - average) * (x - average));
+        }
+
+        fourCentralMoment = (expression)/n;
+
+        return fourCentralMoment;
+    }
+
+    public double kurtosis(){
+        return this.fourCentralMoment()/(this.variance() * variance()); //wariancja to odchylenie podniesione do 2 potęgi stąd wariancja do kwadratu to odchylenie do potęgi 4
+    }
 }
