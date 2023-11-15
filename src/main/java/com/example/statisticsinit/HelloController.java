@@ -4,6 +4,10 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
@@ -19,44 +23,32 @@ public class HelloController implements  Initializable{
     public ArrayList<Integer> carAccidentsInChosenYear = new ArrayList<>();
     public static String[] yearsList;
     @FXML
-    private ComboBox statisticsYearsCmbBox,charnoffYearsListCmbBox;
+    private ComboBox statisticsYearsCmbBox;
     @FXML
     private TextField odchylenieStandTxtField,minTxtField,maksTxtField,avgTxtField,medianaTxtField,dominTxtField;
     @FXML
     private TextField q1TxtField,q2TxtField,q3TxtField,rozstepTxtField,skosnoscTxtField,varianceTxtField,kurtozaTxtField;
     @FXML
     private ImageView currentCharnoffImgView;
+    @FXML
+    private CategoryAxis carAccidentCatAxis = new CategoryAxis();
+    @FXML
+    final NumberAxis carAccidentsNumberAxis = new NumberAxis();
+    @FXML
+    final BarChart<String,Number> accidentBarChart = new BarChart<>(carAccidentCatAxis,carAccidentsNumberAxis);
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadCharnoffImg();
+        displayBarChart();
     }
     @FXML
     protected void onWczytajCSVBtnClick() {
         csv.main();
         yearsList = CsvReader.getYears(csv.data);
         statisticsYearsCmbBox.getItems().addAll(yearsList);
-        charnoffYearsListCmbBox.getItems().addAll(yearsList);
     }
 
-    @FXML
-    public void loadCharnoffImg() {
-        charnoffYearsListCmbBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observableValue, Object o, Object t1) {
-                System.out.println(charnoffYearsListCmbBox.getValue());
-                try{
-                    int value = Integer.parseInt(String.valueOf(charnoffYearsListCmbBox.getValue()));
-                    String quartile = getQuartileBasedOnValue(value);
-                    currentCharnoffImgView.setImage(new Image(HelloController.class.getResourceAsStream("poland"
-                            + quartile +".png")));
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public String getQuartileBasedOnValue(int value){ //should return Q1,Q2 or Q3
+    public String getQuartileBasedOnValue(float value){ //should return Q1,Q2 or Q3
         StatisticsMethod statisticsMethod = new StatisticsMethod(carAccidentsInChosenYear);
 
         double distanceToQ1 = Math.abs(value - statisticsMethod.firstQuartile());
@@ -86,7 +78,7 @@ public class HelloController implements  Initializable{
         //Load concrete year data (without year number) to an ArrayList
         carAccidentsInChosenYear = csv.getDataByYear(yearFromComboBox);
 
-        displayCarAccidentsByYear();
+        //displayCarAccidentsByYear();
 
         //Load data to appriopriate fields
         StatisticsMethod statisticsMethods = new StatisticsMethod(carAccidentsInChosenYear);
@@ -103,6 +95,15 @@ public class HelloController implements  Initializable{
         skosnoscTxtField.setText(String.valueOf(statisticsMethods.skewness()));
         varianceTxtField.setText(String.valueOf(statisticsMethods.variance()));
         kurtozaTxtField.setText(String.valueOf(statisticsMethods.kurtosis()));
+
+        // ------------>>>   Charnoff barChart     <<<<<-----------------
+        System.out.println("Average: " + statisticsMethods.average() + "   Q1:" + statisticsMethods.firstQuartile()
+                + "   Q2: " + statisticsMethods.secondQuartile() + "  Q3: " + statisticsMethods.thirdQuartile());
+        String quartile = getQuartileBasedOnValue(statisticsMethods.average());
+        currentCharnoffImgView.setImage(new Image(HelloController.class.getResourceAsStream("poland"
+                + quartile +".png")));
+
+        displayBarChart();
     }
 
     public void displayCarAccidentsByYear(){
@@ -114,4 +115,19 @@ public class HelloController implements  Initializable{
         System.out.println("");
     }
 
+    public void displayBarChart(){
+
+        accidentBarChart.setTitle("Średnia ilość wypadków drogowych");
+        carAccidentCatAxis.setLabel("Rok");
+        carAccidentsNumberAxis.setLabel("Wartość");
+
+        XYChart.Series series1 = new XYChart.Series();
+        series1.getData().add(new XYChart.Data<>("austria", 25601.34));
+        series1.getData().add(new XYChart.Data<>("bbb", 20148.82));
+        series1.getData().add(new XYChart.Data<>("france", 10000));
+        series1.getData().add(new XYChart.Data<>("italy", 35407.15));
+        series1.getData().add(new XYChart.Data<>("usa", 12000));
+
+        accidentBarChart.getData().add(series1);
+    }
 }
