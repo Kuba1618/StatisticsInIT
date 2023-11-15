@@ -1,39 +1,75 @@
 package com.example.statisticsinit;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-import javax.swing.filechooser.FileSystemView;
-import java.awt.*;
-import java.io.*;
 import java.net.URL;
 import java.util.*;
-import java.util.List;
 
 public class HelloController implements  Initializable{
     public CsvReader csv = new CsvReader();
     public ArrayList<Integer> carAccidentsInChosenYear = new ArrayList<>();
     public static String[] yearsList;
     @FXML
-    private ComboBox yearsComboBox;
+    private ComboBox statisticsYearsCmbBox,charnoffYearsListCmbBox;
     @FXML
     private TextField odchylenieStandTxtField,minTxtField,maksTxtField,avgTxtField,medianaTxtField,dominTxtField;
     @FXML
     private TextField q1TxtField,q2TxtField,q3TxtField,rozstepTxtField,skosnoscTxtField,varianceTxtField,kurtozaTxtField;
-
+    @FXML
+    private ImageView currentCharnoffImgView;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loadCharnoffImg();
     }
     @FXML
     protected void onWczytajCSVBtnClick() {
         csv.main();
         yearsList = CsvReader.getYears(csv.data);
-        yearsComboBox.getItems().addAll(yearsList);
+        statisticsYearsCmbBox.getItems().addAll(yearsList);
+        charnoffYearsListCmbBox.getItems().addAll(yearsList);
+    }
+
+    @FXML
+    public void loadCharnoffImg() {
+        charnoffYearsListCmbBox.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object o, Object t1) {
+                System.out.println(charnoffYearsListCmbBox.getValue());
+                try{
+                    int value = Integer.parseInt(String.valueOf(charnoffYearsListCmbBox.getValue()));
+                    String quartile = getQuartileBasedOnValue(value);
+                    currentCharnoffImgView.setImage(new Image(HelloController.class.getResourceAsStream("poland"
+                            + quartile +".png")));
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public String getQuartileBasedOnValue(int value){ //should return Q1,Q2 or Q3
+        StatisticsMethod statisticsMethod = new StatisticsMethod(carAccidentsInChosenYear);
+
+        double distanceToQ1 = Math.abs(value - statisticsMethod.firstQuartile());
+        double distanceToQ2 = Math.abs(value - statisticsMethod.secondQuartile());
+        double distanceToQ3 = Math.abs(value - statisticsMethod.thirdQuartile());
+
+        if (distanceToQ1 <= distanceToQ2 && distanceToQ1 <= distanceToQ3) {
+            return "Q1";
+        } else if (distanceToQ2 <= distanceToQ1 && distanceToQ2 <= distanceToQ3) {
+            return "Q2";
+        } else {
+            return "Q3";
+        }
     }
 
     @FXML
@@ -41,7 +77,7 @@ public class HelloController implements  Initializable{
         int yearFromComboBox = 0;
 
         try{
-            yearFromComboBox = Integer.parseInt(yearsComboBox.getSelectionModel().getSelectedItem() + "");
+            yearFromComboBox = Integer.parseInt(statisticsYearsCmbBox.getSelectionModel().getSelectedItem() + "");
 
         }catch (Exception e){
             System.out.println("Błąd konwersji typów (String na int)");
