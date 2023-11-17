@@ -102,17 +102,30 @@
                </Tab>
                <Tab text="Wykres kolumnowy">
                    <content>
-                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+<!--                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">-->
+<!--                        <children>-->
+<!--                           <BarChart fx:id="accidentBarChart" layoutX="70.0" layoutY="30.0" prefHeight="310.0" prefWidth="455.0">-->
+<!--                             <xAxis>-->
+<!--                               <CategoryAxis fx:id="carAccidentCatAxis" side="BOTTOM" />-->
+<!--                             </xAxis>-->
+<!--                             <yAxis>-->
+<!--                               <NumberAxis fx:id="carAccidentsNumberAxis" prefHeight="301.0" prefWidth="0.0" side="LEFT" />-->
+<!--                             </yAxis>-->
+<!--                           </BarChart>-->
+<!--                        </children></AnchorPane>-->
+
+                       <Pane>
                         <children>
-                           <BarChart fx:id="accidentBarChart" layoutX="70.0" layoutY="30.0" prefHeight="310.0" prefWidth="455.0">
+                           <BarChart fx:id="carAccidentBarChart22" layoutX="55.0" layoutY="1.0" prefHeight="369.0" prefWidth="500.0" stylesheets="@style.css">
                              <xAxis>
-                               <CategoryAxis fx:id="carAccidentCatAxis" side="BOTTOM" />
+                               <CategoryAxis fx:id="categoryID" side="BOTTOM" />
                              </xAxis>
                              <yAxis>
-                               <NumberAxis fx:id="carAccidentsNumberAxis" prefHeight="301.0" prefWidth="0.0" side="LEFT" />
+                               <NumberAxis fx:id="numberID" side="LEFT" />
                              </yAxis>
                            </BarChart>
-                        </children></AnchorPane>
+                        </children>
+                       </Pane>
                    </content>
                </Tab>
            </tabs>

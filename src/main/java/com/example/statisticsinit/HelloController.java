@@ -34,17 +34,17 @@ public class HelloController implements  Initializable{
     private CategoryAxis carAccidentCatAxis = new CategoryAxis();
     @FXML
     final NumberAxis carAccidentsNumberAxis = new NumberAxis();
-    @FXML
-    final BarChart<String,Number> accidentBarChart = new BarChart<>(carAccidentCatAxis,carAccidentsNumberAxis);
 
+    @FXML
+    BarChart<String,Number> carAccidentBarChart22 = new BarChart<>(carAccidentCatAxis,carAccidentsNumberAxis);;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        displayBarChart();
     }
     @FXML
     protected void onWczytajCSVBtnClick() {
         csv.main();
-        yearsList = CsvReader.getYears(csv.data);
+        yearsList = CsvReader.getYears(CsvReader.data);
+        statisticsYearsCmbBox.getItems().clear();
         statisticsYearsCmbBox.getItems().addAll(yearsList);
     }
 
@@ -103,7 +103,7 @@ public class HelloController implements  Initializable{
         currentCharnoffImgView.setImage(new Image(HelloController.class.getResourceAsStream("poland"
                 + quartile +".png")));
 
-        displayBarChart();
+        displayBarChart(statisticsMethods);
     }
 
     public void displayCarAccidentsByYear(){
@@ -115,19 +115,23 @@ public class HelloController implements  Initializable{
         System.out.println("");
     }
 
-    public void displayBarChart(){
+    public void displayBarChart(StatisticsMethod statisticsMethod){
 
-        accidentBarChart.setTitle("Średnia ilość wypadków drogowych");
-        carAccidentCatAxis.setLabel("Rok");
+        carAccidentBarChart22.setTitle("Średnia ilość wypadków drogowych");
+
+        carAccidentCatAxis.setLabel("Rok222");
         carAccidentsNumberAxis.setLabel("Wartość");
 
         XYChart.Series series1 = new XYChart.Series();
-        series1.getData().add(new XYChart.Data<>("austria", 25601.34));
-        series1.getData().add(new XYChart.Data<>("bbb", 20148.82));
-        series1.getData().add(new XYChart.Data<>("france", 10000));
-        series1.getData().add(new XYChart.Data<>("italy", 35407.15));
-        series1.getData().add(new XYChart.Data<>("usa", 12000));
 
-        accidentBarChart.getData().add(series1);
+        for(int i = 0; i < yearsList.length; i++){
+            carAccidentsInChosenYear = csv.getDataByYear(Integer.parseInt(yearsList[i]));
+            StatisticsMethod statisticsMethods = new StatisticsMethod(carAccidentsInChosenYear);
+            series1.getData().add(new XYChart.Data<>(yearsList[i],statisticsMethods.average()));
+        }
+
+        carAccidentBarChart22.getData().clear();
+        carAccidentBarChart22.getData().add(series1);
+
     }
 }
